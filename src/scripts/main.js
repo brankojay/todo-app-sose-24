@@ -8,8 +8,14 @@ function setupTodoApp() {
   function addTodo() {
     const newListItem = document.createElement("li");
 
-    newListItem.innerText = todoInput.value;
-    todoList.appendChild(newListItem);
+    if (todoInput.value !== "") {
+      newListItem.innerText = todoInput.value;
+      todoList.appendChild(newListItem);
+  
+      todoInput.value = "";
+    } else {
+      alert("Bitte geben Sie einen Todo-Titel an.");
+    }
   }
 
   todoButton.addEventListener("click", addTodo);
