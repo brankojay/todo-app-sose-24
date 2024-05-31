@@ -1,0 +1,51 @@
+@import "./reset.css";
+
+.container {
+    max-width: 40vw;
+    margin: 0 auto;
+}
+
+#todo-form {
+    margin-top: 2rem;
+}
+
+#add-todo-button {
+    cursor: pointer;
+}
+
+#todo-list {
+    margin-top: 2rem;
+    list-style: none;
+    padding-left: 0;
+}
+
+.todo-list-item {
+    padding: .5rem 0;
+    background-color: gainsboro;
+    margin-bottom: .5rem;
+}
+
+.todo-list-item__container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.todo-list-item__headline {
+    margin-left: .5rem;
+}
+
+.todo-list-item__controls__delete {
+    appearance: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.todo-list-item__controls__delete svg {
+    width: 15px;
+}
+
+.todo-list-item__controls__delete:hover svg {
+    fill: red;
+}
