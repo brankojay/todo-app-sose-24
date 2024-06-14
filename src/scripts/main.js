@@ -5,24 +5,23 @@ function setupTodoApp() {
   const todoButton = document.querySelector("#add-todo-button");
   const todoInput = document.querySelector("#todo-title-input");
   const todoList = document.querySelector("#todo-list");
-  const todoData = [
-    {
-      id: "82cd49ca-81a9-47d9-998e-83e5276e02e3",
-      title: "Todo 1 Titel"
-    },
-    {
-      id: "a92618ef-9df5-4649-9fb9-3a0389c5e411",
-      title: "Todo 2 Titel"
-    },
-    {
-      id: "91be7314-9013-437d-ae54-c51e7c00e4a1",
-      title: "Todo 3 Titel"
-    },
-    {
-      id: "5ce640cc-ee05-4da0-9694-e753af7d8029",
-      title: "Todo 4 Titel"
+  let todoData;
+
+  async function fetchToDoData() {
+    try {
+      const todoRequest = await fetch("http://localhost:8080/todos");
+      const extractedTodoData = await todoRequest.json();
+  
+      console.log(extractedTodoData);
+      todoData = extractedTodoData;
+      setTodoListData();
+    } catch(error) {
+      todoData = [];
+      console.error(error);
     }
-  ];
+  }
+
+  fetchToDoData();
 
   function addItemToList(todo) {
     const listItem = `
@@ -61,8 +60,6 @@ function setupTodoApp() {
       });
     });
   }
-
-  setTodoListData();
 
   function addTodo() {
     if (todoInput.value !== "") {
