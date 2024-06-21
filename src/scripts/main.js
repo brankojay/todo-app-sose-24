@@ -23,6 +23,38 @@ function setupTodoApp() {
 
   fetchToDoData();
 
+  async function createToDoData(todo) {
+    try {
+      const createToDoRequest = await fetch("http://localhost:8080/todos", {
+        method: "POST",
+        body: JSON.stringify(todo),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      const createToDoResponse = await createToDoRequest.json();
+
+      todoData = createToDoResponse;
+      setTodoListData();
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
+  async function removeTodo(id) {
+    try {
+      const deleteToDoRequest = await fetch(`http://localhost:8080/todos/${id}`, {
+        method: "DELETE"
+      });
+      const deleteToDoResponse = await deleteToDoRequest.json();
+
+      todoData = deleteToDoResponse;
+      setTodoListData();
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
   function addItemToList(todo) {
     const listItem = `
     <li class="todo-list-item" data-todo-id="${todo.id}">
@@ -63,28 +95,17 @@ function setupTodoApp() {
 
   function addTodo() {
     if (todoInput.value !== "") {
-      todoData.push({
+      const newTodo = {
         id: uuidv4(),
         title: todoInput.value
-      });
-      setTodoListData();
+      };
 
+      createToDoData(newTodo);
       todoInput.value = "";
     } else {
       alert("Bitte geben Sie einen Todo-Titel an.");
     }
   }
-
-  function removeTodo(id) {
-    const existingItem = todoData.find(function(item) {
-      return item.id === id;
-    });
-
-    if (existingItem) {
-      todoData.splice(todoData.indexOf(existingItem), 1);
-      setTodoListData();
-    }
-  };
 
   todoButton.addEventListener("click", addTodo);
 };
